@@ -21,7 +21,7 @@ public class StreamWordCount1 {
         StreamExecutionEnvironment env =
                 StreamExecutionEnvironment.getExecutionEnvironment();
         // 2. 读取文本流
-        DataStreamSource<String> lineDSS = env.socketTextStream("hadoop102",
+        DataStreamSource<String> lineDSS = env.socketTextStream("101.43.132.92",
                 7777);
         // 3. 转换数据格式
         SingleOutputStreamOperator<Tuple2<String, Long>> wordAndOne = lineDSS
