@@ -17,11 +17,11 @@ import java.util.Arrays;
  */
 public class StreamWordCount {
     public static void main(String[] args) throws Exception {
-// 1. 创建流式执行环境
+        // 1. 创建流式执行环境
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-// 2. 读取文件25
+        // 2. 读取文件25
         DataStreamSource<String> lineDSS = env.readTextFile("input/words.txt");
-// 3. 转换数据格式
+        // 3. 转换数据格式
         SingleOutputStreamOperator<Tuple2<String, Long>> wordAndOne = lineDSS
                 .flatMap((String line, Collector<Tuple2<String, Long>> out) -> {
                     String[] words = line.split(" ");
@@ -30,13 +30,13 @@ public class StreamWordCount {
                     }
                 })
                 .returns(Types.TUPLE(Types.STRING, Types.LONG));
-// 4. 分组
+        // 4. 分组
         KeyedStream<Tuple2<String, Long>, String> wordAndOneKS = wordAndOne.keyBy(t -> t.f0);
-// 5. 求和
+        // 5. 求和
         SingleOutputStreamOperator<Tuple2<String, Long>> result = wordAndOneKS.sum(1);
-// 6. 打印
+        // 6. 打印
         result.print();
-// 7. 执行
+        // 7. 执行
         env.execute();
     }
 }
