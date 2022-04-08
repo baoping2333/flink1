@@ -1,4 +1,4 @@
-package com.ping.flink01;
+package com.ping.wc;
 
 import org.apache.flink.api.common.typeinfo.Types;
 import org.apache.flink.api.java.ExecutionEnvironment;

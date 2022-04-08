@@ -1,4 +1,4 @@
-package com.ping.flink01;
+package com.ping.wc;
 
 import org.apache.flink.api.common.typeinfo.Types;
 import org.apache.flink.api.java.tuple.Tuple2;
@@ -8,19 +8,19 @@ import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.util.Collector;
 
-import java.util.Arrays;
-
 /**
  * @author ping
- * 2022/4/1
- * 有界流
+ * 2022/4/2
+ * 无界流
  */
-public class StreamWordCount {
+public class StreamWordCount1 {
     public static void main(String[] args) throws Exception {
         // 1. 创建流式执行环境
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        // 2. 读取文件25
-        DataStreamSource<String> lineDSS = env.readTextFile("input/words.txt");
+        StreamExecutionEnvironment env =
+                StreamExecutionEnvironment.getExecutionEnvironment();
+        // 2. 读取文本流
+        DataStreamSource<String> lineDSS = env.socketTextStream("tenyun02",
+                7777);
         // 3. 转换数据格式
         SingleOutputStreamOperator<Tuple2<String, Long>> wordAndOne = lineDSS
                 .flatMap((String line, Collector<Tuple2<String, Long>> out) -> {
