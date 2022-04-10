@@ -1,5 +1,6 @@
 package com.ping.wc;
 
+import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.api.common.typeinfo.Types;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
@@ -18,6 +19,9 @@ public class StreamWordCount1 {
         // 1. 创建流式执行环境
         StreamExecutionEnvironment env =
                 StreamExecutionEnvironment.getExecutionEnvironment();
+
+        //设置执行模式
+        env.setRuntimeMode(RuntimeExecutionMode.AUTOMATIC);
         // 2. 读取文本流
         DataStreamSource<String> lineDSS = env.socketTextStream("tenyun02",
                 7777);
